@@ -18,7 +18,7 @@
 # - External URL: https://example.com/image.jpg
 # - Collection objectid: demo_001
 #
-image-style: full-image                # full-image, half-image, or no-image
+image-style: no-image                # full-image, half-image, or no-image
 featured-image: /assets/img/writing-instruments.jpg
 featured-image-credit: "General Research Division, The New York Public Library. 'An illustration of writing brushes' The New York Public Library Digital Collections. 1908. [https://digitalcollections.nypl.org/items/07caacb0-c6cc-012f-af8d-58d385a7bc34](https://digitalcollections.nypl.org/items/07caacb0-c6cc-012f-af8d-58d385a7bc34)"
 featured-image-alt-text: "An illustration of writing brushes with Japanese labels" # Add alt text for accessibility
@@ -48,7 +48,7 @@ keyboard-essay-nav: true
 #          gregynog, ashendene, custom
 # ────────────────────────────────────────────────────────────────────────
 
-color-theme: default
+color-theme: lyre
 
 #### BUILT-IN THEMES (printing-history references)
 # idaho     — USDA, 1958 Douglas-fir cloth, gold stamp · dark green navbar · Spectral
@@ -167,14 +167,14 @@ browse-buttons: true # true / false, adds previous/next arrows to items, but inc
 ##########
 # SUBJECTS PAGE
 #
-subjects-fields: subject;creator # set of fields separated by ; to be featured in the cloud (leave blank or comment out to not generate)
+subjects-fields: #subject;creator # set of fields separated by ; to be featured in the cloud (leave blank or comment out to not generate)
 subjects-min: 1 # min size for subject cloud, too many terms = slow load time!
 subjects-stopwords: # set of subjects separated by ; that will be removed from display, e.g. boxers;boxing
 
 ##########
 # LOCATIONS PAGE
 #
-locations-fields: location # set of fields separated by ; to be featured in the cloud (leave blank or comment out to not generate)
+locations-fields: #location # set of fields separated by ; to be featured in the cloud (leave blank or comment out to not generate)
 locations-min: 1 # min size for subject cloud, too many terms = slow load time!
 locations-stopwords: # set of subjects separated by ; that will be removed from display, e.g. boxers;boxing
 
