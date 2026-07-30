@@ -26,7 +26,7 @@ defaults:
     values:
       layout: "essay-content"                 # Layout template for essay pages
       permalink: /essay/:slug:output_ext      # URL pattern: /essay/filename.html
-      text_search: true  # opt in to text search
+      text_search: false  # opt in to text search
 
 ##########
 # collectionbuilder-csv
@@ -51,7 +51,7 @@ source-code: https://github.com/CollectionBuilder/collectionbuilder-csv
 # These fields control what appears on your homepage cover/title page
 #
 # title: Main title displayed prominently on the cover page (required)
-title: CB-Essay
+title: Meaning Metadata
 #
 # author: Appears as "by [Author Name]" beneath the title on cover page (optional)
 # - If provided, this displays instead of the tagline
@@ -65,20 +65,19 @@ author:
 # - Use for descriptive subtitle or project tagline
 # - Can also use HTML for multi-line display:
 #   tagline: "A Digital Edition<br>Published 2024"
-tagline: Essay in the front, CollectionBuilder in the back
+tagline: 2026 workshop on metadata and its means
 #
 # METADATA FIELDS (for search engines and social media):
 #
 # description: Longer description for search engines and social sharing (recommended)
 # - Appears in meta tags and search results
 # - Keep around 160 characters max for best display in search results
-description: "CB-Essay combines CollectionBuilder-CSV with essay and exhibit capabilities, allowing you to create multi-modal narratives that incorporate items from your digital collection directly into your writing and pages."
-#
+description: #
 # keywords: Short list of subjects separated by semicolons, for rich markup metadata
-keywords: digital humanities; multimodal essays; lib-static
+keywords: #
 #
 # exhibit-creator: Creator of the digital collection for meta tags (your name or GitHub username)
-exhibit-creator: dcnb
+exhibit-creator: deependdreams
 
 ##########
 # COLLECTION SETTINGS
@@ -101,16 +100,16 @@ metadata: demo-compoundobjects-metadata
 #   Enter information for your organization (replacing the CDIL links and name below) if you'd like to brand your site with a logo
 #   To remove the branding, comment out these values, or delete them. 
 #
-organization-name: "Center for Digital Inquiry and Learning (CDIL)"
-organization-link: https://cdil.lib.uidaho.edu/
-organization-logo-banner: https://cdil.lib.uidaho.edu/storying-extinction/assets/img/cdil.png
-organization-logo-nav: https://cdil.lib.uidaho.edu/assets/img/logo.png
+#organization-name: "Center for Digital Inquiry and Learning (CDIL)"
+#organization-link: https://cdil.lib.uidaho.edu/
+#organization-logo-banner: https://cdil.lib.uidaho.edu/storying-extinction/assets/img/cdil.png
+#organization-logo-nav: https://cdil.lib.uidaho.edu/assets/img/logo.png
 
 ##########
 # ROBOTS EXCLUDE
 #
 # set noindex to true if you do NOT want Google to index your site
-# noindex: true 
+ noindex: true 
 
 ##########
 # BUILD SETTINGS 
