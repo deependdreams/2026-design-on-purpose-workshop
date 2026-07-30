@@ -12,7 +12,6 @@
 #    (show-contents-nav, show-homepage-toc, show-section-nav)
 #
 # Learn more: docs/cb-essay/essay-writing.md
-
 collections:
   essay:
     sort_by: order  # Essays display in order based on "order" field in front matter
