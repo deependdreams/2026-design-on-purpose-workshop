@@ -152,3 +152,12 @@ bundle exec rake            # List available rake tasks
 5. **Verify** you're following the data-driven architecture — if editing `_includes/` or `_layouts/`, confirm a config file or essay include can't do it.
 
 For questions about the framework itself, see the [official documentation](https://collectionbuilder.github.io/cb-docs/) or [discussion forum](https://github.com/CollectionBuilder/collectionbuilder.github.io/discussions).
+
+## Cursor Cloud specific instructions
+
+This repo is a single-process Jekyll static site — the only service is the Jekyll dev server. There is no backend/database, and no Node/npm (front-end libs are pre-vendored under `assets/lib`). Standard commands live in the **Build Commands** section above.
+
+- **Serving under a baseurl (important gotcha):** `_config.yml` sets `baseurl: /2026-design-on-purpose-workshop`, so `bundle exec jekyll serve` serves the site at `http://localhost:4000/2026-design-on-purpose-workshop/`, **not** at the root `/`. Hitting `http://localhost:4000/` returns 404 — that's expected, not a broken build. Use the baseurl path (e.g. `/2026-design-on-purpose-workshop/browse.html`, `/2026-design-on-purpose-workshop/essay/<name>.html`) when testing.
+- **No separate lint step:** validation is the Jekyll build itself (`bundle exec jekyll build`). The SCSS build emits Sass `color-functions` **deprecation warnings** from the framework's `_theme-colors.scss`; these are harmless and unrelated to your changes.
+- **Live reload:** `jekyll serve` auto-regenerates on file changes (adding/removing an `_essay/*.md` file updates the site within a couple seconds). Editing `_config.yml` is the exception — Jekyll must be restarted for config changes to take effect.
+- **Ruby / gems:** the VM has Ruby 3.2 (system apt) while CI targets Ruby 3.4; both build the site fine with Jekyll 4.x since there is no committed `Gemfile.lock`. Gems install to `~/.bundle-gems` via a global bundler `path` config, so `bundle install` needs no sudo. ImageMagick is installed for the optional `rake generate_derivatives` image tasks.
