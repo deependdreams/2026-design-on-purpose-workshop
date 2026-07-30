@@ -18,10 +18,10 @@
 # - External URL: https://example.com/image.jpg
 # - Collection objectid: demo_001
 #
-image-style: half-image                # full-image, half-image, or no-image
-featured-image: /assets/img/writing-instruments.jpg
-featured-image-credit: "General Research Division, The New York Public Library. 'An illustration of writing brushes' The New York Public Library Digital Collections. 1908. [https://digitalcollections.nypl.org/items/07caacb0-c6cc-012f-af8d-58d385a7bc34](https://digitalcollections.nypl.org/items/07caacb0-c6cc-012f-af8d-58d385a7bc34)"
-featured-image-alt-text: "An illustration of writing brushes with Japanese labels" # Add alt text for accessibility
+image-style: full-image                # full-image, half-image, or no-image
+featured-image: /assets/img/weaving-hands.jpg
+featured-image-credit: "Feist, J. 'Weaving hands' Flickr. 2012. [https://www.flickr.com/photos/joshuafeist/7656422150/](https://www.flickr.com/photos/joshuafeist/7656422150/)"
+featured-image-alt-text: "A color photograph of hands weaving at a loom. The loom is strung with the warp, but not yet woven." # Add alt text for accessibility
 
 
 # NAVIGATION FEATURES
@@ -48,7 +48,7 @@ keyboard-essay-nav: true
 #          gregynog, ashendene, custom
 # ────────────────────────────────────────────────────────────────────────
 
-color-theme: lyre
+color-theme: idaho
 
 
 #### BUILT-IN THEMES (printing-history references)
