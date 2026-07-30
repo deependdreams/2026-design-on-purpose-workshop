@@ -37,12 +37,11 @@ defaults:
 # URL VARIABLES
 #
 # site domain, full URL to the production location of your collection
-url: https://deependdreams.github.io
+url: https://deependdreams.github.io 
 # path to location on the domain if necessary e.g. /digital/hjccc
-baseurl: /2026-design-on-purpose-workshop
+baseurl: /2026-design-on-purpose-workshop 
 # location of code, the full url to your github repository
-source-code: https://github.com/deependdreams/2026-design-on-purpose-workshop
-
+source-code: https://github.com/deependdreams/2026-design-on-purpose-workshop 
 ##########
 # SITE SETTINGS
 #
@@ -64,20 +63,19 @@ author:
 # - Use for descriptive subtitle or project tagline
 # - Can also use HTML for multi-line display:
 #   tagline: "A Digital Edition<br>Published 2024"
-tagline: 'An August 2026 workshop series'
+tagline: 'An August 2026 workshop series' 
 #
 # METADATA FIELDS (for search engines and social media):
 #
 # description: Longer description for search engines and social sharing (recommended)
 # - Appears in meta tags and search results
 # - Keep around 160 characters max for best display in search results
-description: #
+description:
 # keywords: Short list of subjects separated by semicolons, for rich markup metadata
-keywords: #
+keywords:
 #
 # exhibit-creator: Creator of the digital collection for meta tags (your name or GitHub username)
-exhibit-creator: deependdreams
-
+exhibit-creator: deependdreams 
 ##########
 # COLLECTION SETTINGS
 #
