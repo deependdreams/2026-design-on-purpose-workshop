@@ -24,4 +24,5 @@ objects/*
 !objects/thumbs/
 !objects/thumbs/**
 
-books/__pycache__/
+books/
+__pycache__/
