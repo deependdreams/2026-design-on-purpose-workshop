@@ -19,7 +19,7 @@
 # - Collection objectid: demo_001
 #
 image-style: full-image                # full-image, half-image, or no-image
-featured-image: /assets/img/weaving-hands.jpg
+featured-image: /assets/img/weaving_hands.jpg
 featured-image-credit: "Feist, J. 'Weaving hands' Flickr. 2012. [https://www.flickr.com/photos/joshuafeist/7656422150/](https://www.flickr.com/photos/joshuafeist/7656422150/)"
 featured-image-alt-text: "A color photograph of hands weaving at a loom. The loom is strung with the warp, but not yet woven." # Add alt text for accessibility
 
