@@ -51,7 +51,7 @@ source-code: https://github.com/deependdreams/2026-design-on-purpose-workshop
 # These fields control what appears on your homepage cover/title page
 #
 # title: Main title displayed prominently on the cover page (required)
-title: "Warp and Weft: Expressive Metadata for Design on Purpose"
+title: 'Warp and Weft: Expressive Metadata for Design on Purpose'
 #
 # author: Appears as "by [Author Name]" beneath the title on cover page (optional)
 # - If provided, this displays instead of the tagline
@@ -65,7 +65,7 @@ author:
 # - Use for descriptive subtitle or project tagline
 # - Can also use HTML for multi-line display:
 #   tagline: "A Digital Edition<br>Published 2024"
-tagline: "An August 2026 workshop series"
+tagline: 'An August 2026 workshop series'
 #
 # METADATA FIELDS (for search engines and social media):
 #
