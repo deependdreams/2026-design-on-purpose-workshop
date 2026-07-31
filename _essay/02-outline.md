@@ -4,8 +4,10 @@ order: 20
 part: Before
 ---
 
+## The Workshop
 
-## Learning Intention
+Together we will spend two half days on expressive metadata! The following is our learning intentions, a brief outline and various examples and tools.
+## Learning Intentions
 
 The workshop series aims to: 
 - foster conversation and learning about metadata and data model design
@@ -18,7 +20,7 @@ The workshop series aims to:
 - apply the above to the project! 
   
 ## Outline
- Throughout both days, there will be opportunities for sharing through talking, writing, doodling as well as through presence. 
+ The workshop will involve a mixture of prepared slides, free flowing discission and small group discussion opportunites. Throughout both days, there will be opportunities for sharing through talking, writing, doodling as well as through presence. 
  
 ### Day 1, Expressive Metadata: a framework for sharing intention and context
 - Introductions and opening checkin circle
