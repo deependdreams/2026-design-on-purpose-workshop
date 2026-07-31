@@ -38,55 +38,71 @@
   }
 }
 
-/* Resource cards (Examples essay) — print/PDF layout */
-.resource-card-grid {
-  .card {
-    border: none;
-    box-shadow: none;
-    margin-bottom: 1.5rem;
-    break-inside: avoid;
-  }
+/*
+ * Resource cards (Examples essay) — print/PDF only.
+ * Use global class selectors (not scoped under .resource-card-grid): Paged.js
+ * restructures the DOM and nested selectors stop matching after pagination.
+ */
+.resource-card-item {
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
 
-  .card-header {
-    padding: 0 0 0.35rem;
-    background: transparent;
-    border: none;
-  }
+.resource-card {
+  display: flex;
+  flex-direction: column;
+  border: none !important;
+  box-shadow: none !important;
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
 
-  .card-title {
-    font-size: 12pt;
-    font-weight: 600;
-    margin: 0 0 0.35rem;
-  }
+.resource-card-body {
+  display: contents !important;
+}
 
-  .card-img-top {
-    max-height: 2.5in;
-    width: auto;
-    max-width: 100%;
-    margin: 0.35rem 0 0.5rem;
-  }
+.resource-card-title {
+  order: 1;
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+  break-after: avoid;
+}
 
-  .card-body {
-    padding: 0;
-  }
+.resource-card-image {
+  order: 2;
+  max-height: 2in !important;
+  width: auto;
+  max-width: 100%;
+  margin: 0.35rem 0 0.5rem;
+}
 
-  .card-text {
-    font-size: 10pt;
-    margin-bottom: 0.35rem;
-  }
+.resource-card-description {
+  order: 3;
+  font-size: 10pt;
+  margin-bottom: 0.35rem;
+}
 
-  .resource-card-full-record {
-    display: none !important;
-  }
+.resource-card-actions {
+  order: 4;
+  display: block !important;
+  margin-top: 0.35rem;
+  padding-top: 0 !important;
+}
 
-  .resource-card-access {
-    display: inline;
-    font-style: italic;
-    text-decoration: underline;
-    font-size: 10pt;
-    background: none;
-    border: none;
-    padding: 0;
-    color: inherit;
-  }
+a.resource-card-full-record {
+  display: none !important;
+}
+
+a.resource-card-access {
+  display: inline !important;
+  font-style: italic !important;
+  text-decoration: underline;
+  font-size: 10pt;
+  font-weight: normal;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  color: inherit;
 }
