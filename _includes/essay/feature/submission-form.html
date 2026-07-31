@@ -1,0 +1,73 @@
+{% comment %}
+    Formspree submission form for suggesting workshop resources.
+
+    E.G. --> {% include essay/feature/submission-form.html form-context="examples" %}
+    E.G. --> {% include essay/feature/submission-form.html form-context="citations" %}
+
+    Options:
+    - form-context = "examples" or "citations" (required)
+{%- endcomment -%}
+
+{%- assign form_id = include.form-context -%}
+
+<div id="submission-success" class="alert alert-success d-none mb-4" role="alert">
+  Thanks! Your suggestion was received and will be reviewed.
+</div>
+
+<form action="{{ site.data.workshop.formspree-endpoint }}" method="POST" class="card p-4 my-4 submission-form">
+  <h2 class="h4">Suggest an addition</h2>
+  <p class="text-muted small">Submissions are reviewed before being added to the collection.</p>
+
+  <input type="hidden" name="_subject" value="Workshop suggestion: {{ include.form-context | capitalize }}">
+  <input type="hidden" name="submission_page" value="{{ include.form-context }}">
+  <input type="hidden" name="_next" value="{{ page.url | absolute_url }}?submitted=1">
+
+  <div class="mb-3">
+    <label for="sf-title-{{ form_id }}" class="form-label">Title <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" id="sf-title-{{ form_id }}" name="title" required>
+  </div>
+  <div class="mb-3">
+    <label for="sf-creator-{{ form_id }}" class="form-label">Creator <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" id="sf-creator-{{ form_id }}" name="creator" required placeholder="Author, project, or organization">
+  </div>
+  <div class="mb-3">
+    <label for="sf-url-{{ form_id }}" class="form-label">URL <span class="text-danger">*</span></label>
+    <input type="url" class="form-control" id="sf-url-{{ form_id }}" name="url" required placeholder="https://…">
+  </div>
+  <div class="mb-3">
+    <label for="sf-subject-{{ form_id }}" class="form-label">Subject(s) <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" id="sf-subject-{{ form_id }}" name="subject" required placeholder="citation; metadata; example  (semicolon-separated)">
+    <div class="form-text">
+      {%- if include.form-context == 'citations' -%}
+      Include <code>citation</code> for further-reading items.
+      {%- else -%}
+      e.g. <code>digital tool</code>, <code>example</code>, <code>data model</code>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="sf-type-{{ form_id }}" class="form-label">Type</label>
+    <input type="text" class="form-control" id="sf-type-{{ form_id }}" name="type" placeholder="Text, InteractiveResource, Software…">
+  </div>
+  <div class="mb-3">
+    <label for="sf-description-{{ form_id }}" class="form-label">Notes</label>
+    <textarea class="form-control" id="sf-description-{{ form_id }}" name="description" rows="3" placeholder="Why is this useful? How do you use it?"></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="sf-email-{{ form_id }}" class="form-label">Your email (optional)</label>
+    <input type="email" class="form-control" id="sf-email-{{ form_id }}" name="email">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit suggestion</button>
+</form>
+
+<script>
+(function () {
+  if (window.location.search.indexOf('submitted=1') !== -1) {
+    var alert = document.getElementById('submission-success');
+    if (alert) {
+      alert.classList.remove('d-none');
+      alert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+})();
+</script>

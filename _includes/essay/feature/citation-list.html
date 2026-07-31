@@ -1,0 +1,37 @@
+{% comment %}
+    Alphabetical bibliography for citation-tagged items from workshop metadata.
+
+    E.G. --> {% include essay/feature/citation-list.html %}
+{%- endcomment -%}
+
+{%- assign all_items = site.data[site.metadata] | where_exp: 'item', 'item.objectid and item.parentid == nil and item.subject contains "citation"' -%}
+{%- assign sorted_items = all_items | sort: 'title' -%}
+
+{%- if sorted_items.size == 0 -%}
+<p class="text-muted"><em>No citations have been added yet.</em></p>
+{%- else -%}
+<ul class="list-unstyled citation-list">
+  {%- for item in sorted_items -%}
+  <li class="mb-4 pb-3 border-bottom">
+    <p class="mb-1">
+      {%- if item.creator -%}<em>{{ item.creator }}.</em> {%- endif -%}
+      <strong>"{{ item.title }}."</strong>
+      {%- if item.source -%} <span class="text-muted">{{ item.source }}</span>{%- endif -%}
+      {%- if item.object_location contains 'http' -%}
+      {%- assign link = item.object_location -%}
+      {%- elsif item.source contains 'http' -%}
+      {%- assign link = item.source -%}
+      {%- elsif item.identifier contains 'http' -%}
+      {%- assign link = item.identifier -%}
+      {%- endif -%}
+      {%- if link -%}
+      <a href="{{ link }}" target="_blank" rel="noopener" class="ms-1">Access &rarr;</a>
+      {%- endif -%}
+    </p>
+    {%- if item.description -%}
+    <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
+    {%- endif -%}
+  </li>
+  {%- endfor -%}
+</ul>
+{%- endif -%}
