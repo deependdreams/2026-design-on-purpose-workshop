@@ -39,7 +39,7 @@ The workshop series aims to:
 - Opening checkin circle
 - Data modelling overview
   - sharing example projects
-     - identifying their structures and data design choices
+     - identifying their structures and data design choices
      - mapping values and goals to their data model
 - connecting overall values/goals with metadata values into visions of possibility excerise
 - sharing and closing circle
