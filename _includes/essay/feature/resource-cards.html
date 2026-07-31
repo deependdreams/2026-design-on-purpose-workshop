@@ -30,17 +30,15 @@
 <div class="row row-cols-1 row-cols-lg-2 g-4 my-3 resource-card-grid">
   {%- for item in matched_items -%}
   {%- unless include.exclude-subject and item.subject contains include.exclude-subject -%}
-  <div class="col">
-    <div class="card h-100 shadow-sm">
-      <div class="card-header border-0 bg-transparent pb-0 pt-3 px-3">
-        <h4 class="card-title h5 mb-0">{{ item.title }}</h4>
-      </div>
+  <div class="col resource-card-item">
+    <div class="card h-100 shadow-sm resource-card">
       {%- if item.image_small -%}
-      <img class="card-img-top" src="{{ item.image_small | relative_url }}" alt="{{ item.image_alt_text | default: item.title | escape }}">
+      <img class="card-img-top resource-card-image" src="{{ item.image_small | relative_url }}" alt="{{ item.image_alt_text | default: item.title | escape }}">
       {%- endif -%}
-      <div class="card-body d-flex flex-column pt-3">
+      <div class="card-body d-flex flex-column resource-card-body">
+        <h4 class="card-title h5 resource-card-title">{{ item.title }}</h4>
         {%- if item.description -%}
-        <p class="card-text small flex-grow-1">{{ item.description | truncatewords: 30 }}</p>
+        <p class="card-text small flex-grow-1 resource-card-description">{{ item.description | truncatewords: 30 }}</p>
         {%- endif -%}
         <div class="mt-auto pt-3 d-flex flex-column flex-sm-row flex-wrap gap-2 resource-card-actions">
           {%- if item.object_location contains 'http' -%}
