@@ -8,16 +8,18 @@ part: Before
 
 ## Examples and Touchstones 
 
-Below is a growing list of both example exhibits and repositiories as well as tools. The resource list is curated to inspire and support further data design work.
-Whether on the linked pages or other websites, physical spaces interfaces, or experiences I invite you to note when a feature or discovery tool resonates (or not!) For further prompts see below guidance.
-During the workshop we'll have time to share our noticings on these spaces and features as well as think through what data structures might enable them.
+On this page is a growing list of examples, exhibits and repositiories, as well as tools for creating and designing such projects. The resources are curated to inspire and support further data design work!
 
-### Guidance
+During the workshop, we'll have time to share our noticings on these resources and their features as well as think through what data structures might enable them.
+
+### Prompts for Engaging
+Within the linked resources and the broader websites, 
+Within physical spaces, interfaces, and experiences,
+I invite you to note when a particular feature, whether for discovery or otherwise, resonates (or not!)
 
 When observing these exhibits, repositories and tools...
 When observing spaces, interfaces and experiences...
-with any kind of verbal or non verbal response...
-wondering what features and infrastructure are embedded that make these spaces possible?
+What features and infrastructure are embedded that make these spaces possible?
 What values and priorities do they signify?
 What am I drawn to? What am I not drawn to?
 
