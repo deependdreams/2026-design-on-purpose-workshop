@@ -37,3 +37,56 @@
     letter-spacing: 0.05em;
   }
 }
+
+/* Resource cards (Examples essay) — print/PDF layout */
+.resource-card-grid {
+  .card {
+    border: none;
+    box-shadow: none;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+  }
+
+  .card-header {
+    padding: 0 0 0.35rem;
+    background: transparent;
+    border: none;
+  }
+
+  .card-title {
+    font-size: 12pt;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+  }
+
+  .card-img-top {
+    max-height: 2.5in;
+    width: auto;
+    max-width: 100%;
+    margin: 0.35rem 0 0.5rem;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+
+  .card-text {
+    font-size: 10pt;
+    margin-bottom: 0.35rem;
+  }
+
+  .resource-card-full-record {
+    display: none !important;
+  }
+
+  .resource-card-access {
+    display: inline;
+    font-style: italic;
+    text-decoration: underline;
+    font-size: 10pt;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+  }
+}
