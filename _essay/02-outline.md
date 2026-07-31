@@ -6,7 +6,8 @@ part: Before
 
 ## The Workshop
 
-Together we will spend two half days on expressive metadata! The following is our learning intentions, a brief outline and various examples and tools.
+Together we will spend two half days on expressive metadata! The following are the learning intentions and the workshop outline for both days. The following pages include resources and citations, which anyone made add to.
+
 ## Learning Intentions
 
 The workshop series aims to: 
@@ -22,7 +23,8 @@ The workshop series aims to:
 ## Outline
  The workshop will involve a mixture of prepared slides, free flowing discission and small group discussion opportunites. Throughout both days, there will be opportunities for sharing through talking, writing, doodling as well as through presence. 
  
-### Day 1, Expressive Metadata: a framework for sharing intention and context
+### Day 1
+### Expressive Metadata: a framework for sharing intention and context
 - Introductions and opening checkin circle
 - overview of metadata and its many contexts across disciliplines
   - types of metadata
@@ -32,14 +34,14 @@ The workshop series aims to:
 - sharing and closing circle
   - invitation to bring exampls of interfaces, spaces, moments to tomorrow's section 
 
-### Day 2, Design on Purpose: Surfacing Relationality and Multiplicity
-Day 2 will involve 
+### Day 2
+### Design on Purpose: Surfacing Relationality and Multiplicity
 - Opening checkin circle
 - Data modelling overview
   - sharing example projects
-        - identifying their structures and data design choices
-        - mapping values and goals to their data model
-   - connecting overall values/goals with metadata values into visions of possibility excerise
+     - identifying their structures and data design choices
+     - mapping values and goals to their data model
+- connecting overall values/goals with metadata values into visions of possibility excerise
 - sharing and closing circle
 
 
