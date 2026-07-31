@@ -13,5 +13,12 @@ This entire demo site is designed to teach through demonstration. Every feature 
 
 ## Tools
 
+{% include essay/feature/resource-cards.html subject-match="digital tool" %}
 
+## Examples and Models
+
+{% include essay/feature/resource-cards.html subject-match="example" exclude-subject="digital tool" %}
+{% include essay/feature/resource-cards.html subject-match="data model" exclude-subject="digital tool" heading="" %}
+
+{% include essay/feature/submission-form.html form-context="examples" %}
 

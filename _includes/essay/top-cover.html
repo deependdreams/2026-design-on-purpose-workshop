@@ -1,12 +1,19 @@
-{% if page.featured-image contains "/" %}
-{% assign featured-image = page.featured-image | relative_url %}
-{% else %}
+{% if include.banner-image contains "/" %}
+{% assign banner-image = include.banner-image | relative_url %}
+{% elsif include.banner-image %}
+{% assign featured-image-id = site.data[site.metadata] | where: "objectid", include.banner-image | first %}
+{% capture banner-image %}{{ featured-image-id.object_location | default: featured-image-id.image_small | relative_url }}{% endcapture %}
+{% elsif page.featured-image contains "/" %}
+{% assign banner-image = page.featured-image | relative_url %}
+{% elsif page.featured-image %}
 {% assign featured-image-id = site.data[site.metadata] | where: "objectid", page.featured-image | first %}
-{% capture featured-image %}{{ featured-image-id.object_location | default: featured-image-id.image_small | relative_url }}{% endcapture %}
+{% capture banner-image %}{{ featured-image-id.object_location | default: featured-image-id.image_small | relative_url }}{% endcapture %}
+{% else %}
+{% assign banner-image = site.data.theme.featured-image | relative_url %}
 {% endif %}
 <style>
     #everything-at-top {
-        background-image: url('{{featured-image}}');
+        background-image: url('{{ banner-image }}');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -36,7 +43,7 @@
         {% if page.author %}<p class="mb-0"> by {{ page.author }}</p>{% endif %}
     </div>
 
-    <a id="toc-box" class="py-3 px-5 display-6 fs-2 text-white bg-dark bg-opacity-75 rounded text-center" href="#step0">Read the Essay &#8595;</a>
+    <a id="toc-box" class="py-3 px-5 display-6 fs-2 text-white bg-dark bg-opacity-75 rounded text-center" href="#step0">Continue &#8595;</a>
     
 </div>
 </div>
