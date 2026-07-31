@@ -547,27 +547,36 @@
   <script>
     (function() {
       var params = new URLSearchParams(window.location.search);
-      var SITE_ROOT = window.location.origin + '{{ site.baseurl }}';
-
-      function absolutizeUrl(url) {
-        if (!url || url.indexOf('data:') === 0 || url.indexOf('http') === 0 || url.indexOf('//') === 0 || url.indexOf('#') === 0 || url.indexOf('mailto:') === 0) {
-          return url;
-        }
-        if (url.charAt(0) === '/') return SITE_ROOT + url;
-        return url;
-      }
-
-      var PRINT_CSS_URL = absolutizeUrl('{{ "/assets/css/print.css" | relative_url }}');
       {% if site.data.theme.font-cdn %}
       var FONT_CSS_URL = '{{ site.data.theme.font-cdn }}';
       {% else %}
       var FONT_CSS_URL = null;
       {% endif %}
 
+      function absolutizeUrl(url) {
+        if (!url || url.indexOf('data:') === 0 || url.indexOf('http') === 0 || url.indexOf('//') === 0 || url.indexOf('#') === 0 || url.indexOf('mailto:') === 0) {
+          return url;
+        }
+        try {
+          return new URL(url, window.location.href).href;
+        } catch (err) {
+          return url;
+        }
+      }
+
+      var PRINT_CSS_URL = absolutizeUrl('{{ "/assets/css/print.css" | relative_url }}');
+
       function fetchText(url) {
         return fetch(url).then(function(response) {
           if (!response.ok) throw new Error('Failed to fetch ' + url);
           return response.text();
+        });
+      }
+
+      function fetchTextOptional(url) {
+        return fetchText(url).catch(function(err) {
+          console.warn(err);
+          return '';
         });
       }
 
@@ -600,7 +609,12 @@
           if (rawUrl.indexOf('data:') === 0) {
             return { full: entry.full, replacement: entry.full };
           }
-          var absolute = rawUrl.indexOf('http') === 0 ? rawUrl : new URL(rawUrl, baseUrl).href;
+          var absolute;
+          try {
+            absolute = rawUrl.indexOf('http') === 0 ? rawUrl : new URL(rawUrl, baseUrl).href;
+          } catch (err) {
+            return { full: entry.full, replacement: entry.full };
+          }
           return fetchDataUri(absolute).then(function(dataUri) {
             return {
               full: entry.full,
@@ -645,7 +659,7 @@
         setExportStatus('Inlining styles and images…');
 
         var cssTasks = [fetchText(PRINT_CSS_URL)];
-        if (FONT_CSS_URL) cssTasks.push(fetchText(FONT_CSS_URL));
+        if (FONT_CSS_URL) cssTasks.push(fetchTextOptional(FONT_CSS_URL));
 
         return Promise.all(cssTasks).then(function(results) {
           var printCss = results[0];
