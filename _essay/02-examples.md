@@ -1,7 +1,7 @@
 ---
 title: Outline
 order: 20
-part: Overview and Resources
+part: Before
 ---
 
 
