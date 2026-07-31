@@ -12,7 +12,7 @@ search_exclude: true
 
   <div class="print-hub-header">
     <h1>Print &amp; PDF</h1>
-    <p>{% if essay_count == 1 %}Print or save this essay as a PDF.{% else %}Print individual essays or build a custom PDF book from the full collection.{% endif %}</p>
+    <p>{% if essay_count == 1 %}Print or save this essay as a PDF or HTML file.{% else %}Print individual essays or build a custom PDF or HTML book from the full collection.{% endif %}</p>
   </div>
 
   <!-- Featured essay (shown via JS when ?essay= URL param is present) -->
@@ -79,7 +79,10 @@ search_exclude: true
         </div>
         {% endif %}
       </div>
-      <button class="book-generate-btn" id="book-generate-btn">{% if essay_count == 1 %}Generate PDF{% else %}Generate Book PDF{% endif %}</button>
+      <div class="book-export-btns">
+        <button class="book-generate-btn" id="book-generate-btn">{% if essay_count == 1 %}Generate PDF{% else %}Generate Book PDF{% endif %}</button>
+        <button class="book-save-html-btn" id="book-save-html-btn" type="button">{% if essay_count == 1 %}Save as HTML{% else %}Save Book as HTML{% endif %}</button>
+      </div>
     </div>
   </div>
   {% endif %}
@@ -198,24 +201,51 @@ search_exclude: true
     });
   }
 
+  // ——— Build print/book URL from current hub options ———
+  function getSelectedEssayKeys() {
+    return Array.from(
+      document.querySelectorAll('#book-checklist input[type="checkbox"]:checked')
+    ).map(function(cb) { return cb.value; });
+  }
+
+  function buildBookUrl(options) {
+    options = options || {};
+    var checked = options.essays || getSelectedEssayKeys();
+
+    if (checked.length === 0) {
+      return null;
+    }
+
+    var url = '{{ "/print/book/" | relative_url }}' + '?essays=' + checked.join(',');
+    url += '&format=' + formatMode;
+    if (coverToggle && coverToggle.checked) url += '&cover=1';
+    if (layoutMode === 'book') url += '&layout=book';
+    if (options.savehtml) url += '&savehtml=1';
+    else if (options.autoprint !== false) url += '&autoprint=1';
+    return url;
+  }
+
   // ——— Book builder ———
   var generateBtn = document.getElementById('book-generate-btn');
   if (generateBtn) {
     generateBtn.addEventListener('click', function() {
-      var checked = Array.from(
-        document.querySelectorAll('#book-checklist input[type="checkbox"]:checked')
-      ).map(function(cb) { return cb.value; });
-
-      if (checked.length === 0) {
+      var url = buildBookUrl({ autoprint: true });
+      if (!url) {
         alert('Select at least one essay to include.');
         return;
       }
+      window.open(url, '_blank');
+    });
+  }
 
-      var url = '{{ "/print/book/" | relative_url }}' + '?essays=' + checked.join(',');
-      url += '&format=' + formatMode;
-      if (coverToggle && coverToggle.checked) url += '&cover=1';
-      if (layoutMode === 'book') url += '&layout=book';
-      url += '&autoprint=1';
+  var saveHtmlBtn = document.getElementById('book-save-html-btn');
+  if (saveHtmlBtn) {
+    saveHtmlBtn.addEventListener('click', function() {
+      var url = buildBookUrl({ savehtml: true });
+      if (!url) {
+        alert('Select at least one essay to include.');
+        return;
+      }
       window.open(url, '_blank');
     });
   }

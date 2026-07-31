@@ -244,6 +244,9 @@
     {% endif %}
 
     <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+    {% if page.book %}
+    <button class="print-btn print-save-html-btn" id="print-save-html-btn" type="button">Save as HTML</button>
+    {% endif %}
   </nav>
 
   <!-- Main content — landmark used by screen readers to skip to content -->
@@ -543,6 +546,84 @@
   <!-- Register accessibility handler, then trigger layout. -->
   <script>
     (function() {
+      var params = new URLSearchParams(window.location.search);
+      var SITE_ROOT = window.location.origin + '{{ site.baseurl }}';
+
+      function absolutizeUrl(url) {
+        if (!url || url.indexOf('data:') === 0 || url.indexOf('http') === 0 || url.indexOf('//') === 0 || url.indexOf('#') === 0 || url.indexOf('mailto:') === 0) {
+          return url;
+        }
+        if (url.charAt(0) === '/') return SITE_ROOT + url;
+        return url;
+      }
+
+      function absolutizeElementUrls(root) {
+        root.querySelectorAll('[src]').forEach(function(el) {
+          var src = el.getAttribute('src');
+          if (src) el.setAttribute('src', absolutizeUrl(src));
+        });
+        root.querySelectorAll('[href]').forEach(function(el) {
+          var href = el.getAttribute('href');
+          if (href) el.setAttribute('href', absolutizeUrl(href));
+        });
+      }
+
+      function buildHtmlFilename() {
+        var essays = params.get('essays');
+        if (essays && essays.indexOf(',') === -1) {
+          return essays.replace(/[^a-z0-9_-]+/gi, '-').replace(/^-+|-+$/g, '') + '.html';
+        }
+        return '{{ site.title | slugify | default: "book" }}.html';
+      }
+
+      function saveHtmlDocument() {
+        var docEl = document.documentElement.cloneNode(true);
+        docEl.querySelectorAll('script').forEach(function(node) { node.remove(); });
+        var barClone = docEl.querySelector('.print-control-bar');
+        if (barClone) barClone.remove();
+        var shell = docEl.querySelector('#print-content');
+        if (shell) {
+          shell.removeAttribute('aria-hidden');
+          shell.removeAttribute('style');
+        }
+        absolutizeElementUrls(docEl);
+        var html = '<!DOCTYPE html>\n' + docEl.outerHTML;
+        var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = buildHtmlFilename();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      }
+
+      function notifyHtmlDownloadStarted() {
+        var bar = document.querySelector('.print-control-bar');
+        if (!bar) return;
+        var title = bar.querySelector('.print-control-title');
+        if (title) title.textContent = 'Download started — you can close this tab';
+      }
+
+      if (params.get('savehtml') === '1') {
+        var statusBar = document.querySelector('.print-control-bar');
+        var statusTitle = statusBar ? statusBar.querySelector('.print-control-title') : null;
+        if (statusTitle) statusTitle.textContent = 'Preparing HTML download…';
+        saveHtmlDocument();
+        notifyHtmlDownloadStarted();
+        return;
+      }
+
+      var saveHtmlBtn = document.getElementById('print-save-html-btn');
+      if (saveHtmlBtn) {
+        saveHtmlBtn.addEventListener('click', function() {
+          var url = new URL(window.location.href);
+          url.searchParams.set('savehtml', '1');
+          url.searchParams.delete('autoprint');
+          window.location.href = url.toString();
+        });
+      }
+
       // Runs after Paged.js lays out all pages. Marks injected margin boxes
       // (running headers, page numbers) aria-hidden so they are excluded from
       // the PDF tag tree as pagination artifacts per PDF/UA requirements.

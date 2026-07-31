@@ -106,3 +106,9 @@ a.resource-card-access {
   padding: 0 !important;
   color: inherit;
 }
+
+.print-save-html-btn {
+  background: transparent !important;
+  color: oklch(88% 0.003 90);
+  border: 1px solid oklch(55% 0.003 90);
+}
