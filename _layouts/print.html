@@ -59,7 +59,7 @@
   {% endif %}
 
   <!-- Print-only CSS (NOT cb.css — that loads globally and would break the live site) -->
-  <link rel="stylesheet" href="{{ '/assets/css/print.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/print.css' | relative_url }}" id="print-export-css">
 
   <!-- Paged.js hoists @media print rules to global scope (PrintMedia handler), which
        hides .print-control-bar and removes body padding during the screen preview.
@@ -557,15 +557,73 @@
         return url;
       }
 
-      function absolutizeElementUrls(root) {
-        root.querySelectorAll('[src]').forEach(function(el) {
-          var src = el.getAttribute('src');
-          if (src) el.setAttribute('src', absolutizeUrl(src));
+      var PRINT_CSS_URL = absolutizeUrl('{{ "/assets/css/print.css" | relative_url }}');
+      {% if site.data.theme.font-cdn %}
+      var FONT_CSS_URL = '{{ site.data.theme.font-cdn }}';
+      {% else %}
+      var FONT_CSS_URL = null;
+      {% endif %}
+
+      function fetchText(url) {
+        return fetch(url).then(function(response) {
+          if (!response.ok) throw new Error('Failed to fetch ' + url);
+          return response.text();
         });
-        root.querySelectorAll('[href]').forEach(function(el) {
-          var href = el.getAttribute('href');
-          if (href) el.setAttribute('href', absolutizeUrl(href));
+      }
+
+      function fetchDataUri(url) {
+        return fetch(url).then(function(response) {
+          if (!response.ok) return null;
+          return response.blob();
+        }).then(function(blob) {
+          if (!blob) return null;
+          return new Promise(function(resolve) {
+            var reader = new FileReader();
+            reader.onload = function() { resolve(reader.result); };
+            reader.onerror = function() { resolve(null); };
+            reader.readAsDataURL(blob);
+          });
+        }).catch(function() { return null; });
+      }
+
+      function inlineCssUrls(cssText, baseUrl) {
+        var pattern = /url\(\s*(['"]?)([^'")]+)\1\s*\)/g;
+        var matches = [];
+        var match;
+        while ((match = pattern.exec(cssText)) !== null) {
+          matches.push({ full: match[0], url: match[2] });
+        }
+        if (!matches.length) return Promise.resolve(cssText);
+
+        return Promise.all(matches.map(function(entry) {
+          var rawUrl = entry.url.trim();
+          if (rawUrl.indexOf('data:') === 0) {
+            return { full: entry.full, replacement: entry.full };
+          }
+          var absolute = rawUrl.indexOf('http') === 0 ? rawUrl : new URL(rawUrl, baseUrl).href;
+          return fetchDataUri(absolute).then(function(dataUri) {
+            return {
+              full: entry.full,
+              replacement: dataUri ? 'url("' + dataUri + '")' : entry.full
+            };
+          });
+        })).then(function(replacements) {
+          replacements.forEach(function(item) {
+            cssText = cssText.split(item.full).join(item.replacement);
+          });
+          return cssText;
         });
+      }
+
+      function inlineImages(root) {
+        var images = root.querySelectorAll('img[src]');
+        return Promise.all(Array.prototype.map.call(images, function(img) {
+          var src = img.getAttribute('src');
+          if (!src || src.indexOf('data:') === 0) return Promise.resolve();
+          return fetchDataUri(absolutizeUrl(src)).then(function(dataUri) {
+            img.setAttribute('src', dataUri || absolutizeUrl(src));
+          });
+        }));
       }
 
       function buildHtmlFilename() {
@@ -576,41 +634,90 @@
         return '{{ site.title | slugify | default: "book" }}.html';
       }
 
-      function saveHtmlDocument() {
-        var docEl = document.documentElement.cloneNode(true);
-        docEl.querySelectorAll('script').forEach(function(node) { node.remove(); });
-        var barClone = docEl.querySelector('.print-control-bar');
-        if (barClone) barClone.remove();
-        var shell = docEl.querySelector('#print-content');
-        if (shell) {
-          shell.removeAttribute('aria-hidden');
-          shell.removeAttribute('style');
-        }
-        absolutizeElementUrls(docEl);
-        var html = '<!DOCTYPE html>\n' + docEl.outerHTML;
-        var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = buildHtmlFilename();
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-      }
-
-      function notifyHtmlDownloadStarted() {
+      function setExportStatus(message) {
         var bar = document.querySelector('.print-control-bar');
         if (!bar) return;
         var title = bar.querySelector('.print-control-title');
-        if (title) title.textContent = 'Download started — you can close this tab';
+        if (title) title.textContent = message;
+      }
+
+      function saveHtmlDocument() {
+        setExportStatus('Inlining styles and images…');
+
+        var cssTasks = [fetchText(PRINT_CSS_URL)];
+        if (FONT_CSS_URL) cssTasks.push(fetchText(FONT_CSS_URL));
+
+        return Promise.all(cssTasks).then(function(results) {
+          var printCss = results[0];
+          var fontCss = FONT_CSS_URL ? results[1] : '';
+
+          return inlineCssUrls(printCss, PRINT_CSS_URL).then(function(inlinedPrintCss) {
+            if (!fontCss) return inlinedPrintCss;
+            return inlineCssUrls(fontCss, FONT_CSS_URL).then(function(inlinedFontCss) {
+              return inlinedFontCss + '\n\n' + inlinedPrintCss;
+            });
+          });
+        }).then(function(combinedCss) {
+          var docEl = document.documentElement.cloneNode(true);
+
+          docEl.querySelectorAll('script').forEach(function(node) { node.remove(); });
+          var barClone = docEl.querySelector('.print-control-bar');
+          if (barClone) barClone.remove();
+          docEl.querySelectorAll('a.resource-card-full-record').forEach(function(node) { node.remove(); });
+
+          var shell = docEl.querySelector('#print-content');
+          if (shell) {
+            shell.removeAttribute('aria-hidden');
+            shell.removeAttribute('style');
+          }
+
+          var body = docEl.querySelector('body');
+          if (body) {
+            body.classList.remove('has-print-bar');
+            body.classList.add('print-html-export');
+          }
+
+          var head = docEl.querySelector('head');
+          if (head) {
+            head.querySelectorAll('link[rel="stylesheet"], link[rel="preconnect"]').forEach(function(node) {
+              node.remove();
+            });
+            head.querySelectorAll('style[data-pagedjs-ignore]').forEach(function(node) {
+              node.remove();
+            });
+
+            var exportStyle = document.createElement('style');
+            exportStyle.setAttribute('id', 'print-export-inline-css');
+            exportStyle.textContent = combinedCss;
+            head.appendChild(exportStyle);
+          }
+
+          return inlineImages(docEl).then(function() {
+            var html = '<!DOCTYPE html>\n' + docEl.outerHTML;
+            var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = buildHtmlFilename();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+          });
+        });
+      }
+
+      function notifyHtmlDownloadStarted() {
+        setExportStatus('Download started — you can close this tab');
       }
 
       if (params.get('savehtml') === '1') {
-        var statusBar = document.querySelector('.print-control-bar');
-        var statusTitle = statusBar ? statusBar.querySelector('.print-control-title') : null;
-        if (statusTitle) statusTitle.textContent = 'Preparing HTML download…';
-        saveHtmlDocument();
-        notifyHtmlDownloadStarted();
+        setExportStatus('Preparing HTML download…');
+        saveHtmlDocument()
+          .then(notifyHtmlDownloadStarted)
+          .catch(function(err) {
+            console.error(err);
+            setExportStatus('Export failed — try again');
+          });
         return;
       }
 

@@ -12,7 +12,7 @@ search_exclude: true
 
   <div class="print-hub-header">
     <h1>Print &amp; PDF</h1>
-    <p>{% if essay_count == 1 %}Print or save this essay as a PDF or HTML file.{% else %}Print individual essays or build a custom PDF or HTML book from the full collection.{% endif %}</p>
+    <p>{% if essay_count == 1 %}Print or save this essay as a PDF or self-contained HTML file.{% else %}Print individual essays or build a custom PDF or self-contained HTML book from the full collection.{% endif %}</p>
   </div>
 
   <!-- Featured essay (shown via JS when ?essay= URL param is present) -->
