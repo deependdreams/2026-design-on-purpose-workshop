@@ -1,7 +1,7 @@
 ---
 title: Exploring Tools and Examples
 order: 30
-part: Overview and Resources
+part: Before
 ---
 
 
