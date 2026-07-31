@@ -1640,10 +1640,17 @@ mark.essay-result-mark {
       }
     }
 
-    // ── Generate button ────────────────────────────────────────────────────────
+    // ── Export buttons ───────────────────────────────────────────────────────
+    .book-export-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
     .book-generate-btn {
       width: 100%;
-      margin-top: 1.25rem;
+      margin-top: 0;
       font-family: system-ui, sans-serif;
       font-size: 0.72rem;
       padding: 0.55rem 1.1rem;
@@ -1659,6 +1666,28 @@ mark.essay-result-mark {
       transition: background 120ms ease;
 
       &:hover { background: var(--cb-footer-bg); }
+    }
+
+    .book-save-html-btn {
+      width: 100%;
+      font-family: system-ui, sans-serif;
+      font-size: 0.72rem;
+      padding: 0.55rem 1.1rem;
+      background: transparent;
+      color: var(--cb-text-900);
+      border: 1px solid var(--cb-border-300);
+      cursor: pointer;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 120ms ease, border-color 120ms ease;
+
+      &:hover {
+        background: var(--cb-surface-200);
+        border-color: var(--cb-text-500);
+      }
     }
   }
 }

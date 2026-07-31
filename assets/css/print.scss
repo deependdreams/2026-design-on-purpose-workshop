@@ -106,3 +106,20 @@ a.resource-card-access {
   padding: 0 !important;
   color: inherit;
 }
+
+.print-save-html-btn {
+  background: transparent !important;
+  color: oklch(88% 0.003 90);
+  border: 1px solid oklch(55% 0.003 90);
+}
+
+/* Standalone HTML export — savehtml downloads without Paged.js */
+body.print-html-export {
+  padding-top: 0 !important;
+
+  #print-content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+}
