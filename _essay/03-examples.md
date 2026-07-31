@@ -7,9 +7,19 @@ part: Before
 
 
 ## Examples and Touchstones 
-This entire demo site is designed to teach through demonstration. Every feature you see can be **copied directly into your own essays**. See a blockquote you like? Copy the code, replace the content with yours. Find a useful margin note? Same approach.
 
 **You don't need to understand the technical details**—just copy what works and replace the content.
+Below is a growing list of both example exhibits and repositiories as well as tools. Whether on the linked pages or other websites, physical spaces interfaces, or experiences I invite you to note when a feature or discovery tool resonates (or not!) For further prompts see below guidance.
+During the workshop we'll have time to share our noticings on these spaces and features as well as think through what data structures might enable them.
+
+### Guidance
+
+When observing these exhibits, repositories and tools...
+When observing spaces, interfaces and experiences...
+with any kind of verbal or non verbal response...
+wondering what features and infrastructure are embedded that make these spaces possible?
+What values and priorities do they signify?
+What am I drawn to? What am I not drawn to?
 
 ## Tools
 
