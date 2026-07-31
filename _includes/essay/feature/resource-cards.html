@@ -32,15 +32,17 @@
   {%- unless include.exclude-subject and item.subject contains include.exclude-subject -%}
   <div class="col">
     <div class="card h-100 shadow-sm">
+      <div class="card-header border-0 bg-transparent pb-0 pt-3 px-3">
+        <h4 class="card-title h5 mb-0">{{ item.title }}</h4>
+      </div>
       {%- if item.image_small -%}
       <img class="card-img-top" src="{{ item.image_small | relative_url }}" alt="{{ item.image_alt_text | default: item.title | escape }}">
       {%- endif -%}
-      <div class="card-body d-flex flex-column">
-        <h4 class="card-title h5">{{ item.title }}</h4>
+      <div class="card-body d-flex flex-column pt-3">
         {%- if item.description -%}
         <p class="card-text small flex-grow-1">{{ item.description | truncatewords: 30 }}</p>
         {%- endif -%}
-        <div class="mt-auto pt-3 d-flex flex-column flex-sm-row flex-wrap gap-2">
+        <div class="mt-auto pt-3 d-flex flex-column flex-sm-row flex-wrap gap-2 resource-card-actions">
           {%- if item.object_location contains 'http' -%}
           {%- assign access_url = item.object_location -%}
           {%- elsif item.source contains 'http' -%}
@@ -49,9 +51,9 @@
           {%- assign access_url = item.identifier -%}
           {%- endif -%}
           {%- if access_url -%}
-          <a href="{{ access_url }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Access Resource</a>
+          <a href="{{ access_url }}" class="btn btn-primary btn-sm resource-card-access" target="_blank" rel="noopener">Access Resource</a>
           {%- endif -%}
-          <a href="{{ '/items/' | append: item.objectid | append: '.html' | relative_url }}" class="btn btn-outline-secondary btn-sm">Full record</a>
+          <a href="{{ '/items/' | append: item.objectid | append: '.html' | relative_url }}" class="btn btn-outline-secondary btn-sm resource-card-full-record">Full record</a>
         </div>
       </div>
     </div>
