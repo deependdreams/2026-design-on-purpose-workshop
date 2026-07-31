@@ -3,4 +3,17 @@
     This allows you to override any CollectionBuilder or Bootstrap CSS without modifying the base theme files directly.
 */
 
+.resource-card-grid {
+  .card-title {
+    line-height: 1.35;
+  }
 
+  .card-text {
+    margin-bottom: 0;
+  }
+
+  .card-img-top {
+    object-fit: cover;
+    max-height: 180px;
+  }
+}

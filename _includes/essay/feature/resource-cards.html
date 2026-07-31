@@ -27,7 +27,7 @@
 {%- if item_count == 0 -%}
 <p class="text-muted"><em>No items found.</em></p>
 {%- else -%}
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 my-3 resource-card-grid">
+<div class="row row-cols-1 row-cols-lg-2 g-4 my-3 resource-card-grid">
   {%- for item in matched_items -%}
   {%- unless include.exclude-subject and item.subject contains include.exclude-subject -%}
   <div class="col">
@@ -40,7 +40,7 @@
         {%- if item.description -%}
         <p class="card-text small flex-grow-1">{{ item.description | truncatewords: 30 }}</p>
         {%- endif -%}
-        <div class="mt-auto">
+        <div class="mt-auto pt-3 d-flex flex-column flex-sm-row flex-wrap gap-2">
           {%- if item.object_location contains 'http' -%}
           {%- assign access_url = item.object_location -%}
           {%- elsif item.source contains 'http' -%}
@@ -49,7 +49,7 @@
           {%- assign access_url = item.identifier -%}
           {%- endif -%}
           {%- if access_url -%}
-          <a href="{{ access_url }}" class="btn btn-primary btn-sm me-2" target="_blank" rel="noopener">Access Resource</a>
+          <a href="{{ access_url }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Access Resource</a>
           {%- endif -%}
           <a href="{{ '/items/' | append: item.objectid | append: '.html' | relative_url }}" class="btn btn-outline-secondary btn-sm">Full record</a>
         </div>

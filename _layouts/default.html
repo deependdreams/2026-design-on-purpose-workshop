@@ -6,11 +6,17 @@
   <body class="d-flex flex-column h-100">
     <div id="skip-to-content"><a href="#maincontent">Skip to main content</a></div>
     <div id="everything" class="flex-grow-1">
-      {% unless page.featured-image or page.layout == 'home-essay' %}{% include essay/side-nav.html %}{% endunless %}
+      {%- assign skip_side_nav = false -%}
+      {%- if page.featured-image or page.layout == 'home-essay' -%}
+        {%- assign skip_side_nav = true -%}
+      {%- elsif page.layout == 'essay-content' and page.featured-image != false -%}
+        {%- assign skip_side_nav = true -%}
+      {%- endif -%}
+      {% unless skip_side_nav %}{% include essay/side-nav.html %}{% endunless %}
       <main id="maincontent" role="main" class="flex-shrink-0">
         {{ content }}
       </main>
-      {% if page.featured-image or page.layout == "home-essay" %}{% include essay/feature/featured-image-credit.html %}{% endif %}
+      {% if page.featured-image or page.layout == "home-essay" or page.layout == 'essay-content' and page.featured-image != false %}{% include essay/feature/featured-image-credit.html %}{% endif %}
     </div>
     {% include footer.html %}
     {% include foot.html %}

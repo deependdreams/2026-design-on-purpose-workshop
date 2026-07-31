@@ -4,11 +4,13 @@ gallery: true
 custom-foot: essay/js/spotlight-media-handler.html;essay/js/essay-search-highlight-js.html
 ---
 
-{% if page.featured-image != false %}{% include essay/top-cover.html %}{% endif %}
+{% assign show_essay_banner = false %}
+{% if page.featured-image != false %}{% assign show_essay_banner = true %}{% endif %}
+{% if show_essay_banner %}{% include essay/top-cover.html %}{% endif %}
 
-<div class="container my-5">
+<div class="container{% if show_essay_banner %} mt-2 mb-5{% else %} my-5{% endif %}">
 <div class="row">
-    <div id="scrolly" class="container my-4{% if site.data.theme.show-section-nav and page.show-section-nav != false %} has-section-nav{% endif %}">
+    <div id="scrolly" class="container{% if show_essay_banner %} mt-0 mb-4{% else %} my-4{% endif %}{% if site.data.theme.show-section-nav and page.show-section-nav != false %} has-section-nav{% endif %}">
         <article id="step0">
             {%- assign content_start = content | strip | slice: 0, 200 -%}
             {%- assign has_title_header = false -%}
@@ -18,7 +20,7 @@ custom-foot: essay/js/spotlight-media-handler.html;essay/js/essay-search-highlig
                 {%- endif -%}
             {%- endif -%}
             
-            {% unless has_title_header %}
+            {% unless has_title_header or show_essay_banner %}
             <h1 class="display-5 essay-main" id="page-title">{{ page.title }}</h1>
             {% endunless %}
 

@@ -19,12 +19,12 @@
         background-position: center;
     }
     #home-banner {
-        min-height: 400px;
-        max-height: 65vh;
+        min-height: 280px;
+        max-height: 50vh;
         position: relative;
     }
     #title-box {
-        margin-top: 4em; 
+        margin-top: 2em; 
         margin-left: 1em;
         margin-right: 1em;
     }
@@ -36,7 +36,7 @@
 </style>
 <div id="everything-at-top" class="flex-grow-1">
     {% include essay/side-nav.html %}
-<div id="home-banner" class="container-fluid mt-3 mb-5">
+<div id="home-banner" class="container-fluid mb-2">
 
     <div id="title-box" class="col-md-5 py-3 px-5 text-white bg-dark bg-opacity-75 rounded">
         <h1 class="display-2">{{ page.title | default: site.title }}</h1>
